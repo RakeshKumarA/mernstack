@@ -1,9 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
 import HomeScreen from './screens/HomeScreen';
+import ProductScreen from './screens/ProductScreen';
 
 const useStyles = makeStyles({
   root: {
@@ -16,13 +18,16 @@ const App = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Header />
-      <main>
-        <HomeScreen />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className={classes.root}>
+        <Header />
+        <main>
+          <Route path="/" exact component={HomeScreen} />
+          <Route path="/product/:id" component={ProductScreen} />
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 
