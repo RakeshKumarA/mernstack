@@ -9,7 +9,6 @@ import {
   Grid,
   Typography,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
 } from '@material-ui/core';
@@ -52,7 +51,7 @@ const useStyles = makeStyles({
 
 const ProductScreen = ({ match }) => {
   const classes = useStyles();
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
   const history = useHistory();
   const dispatch = useDispatch();
   const { loading, product, error } = useSelector(
@@ -72,6 +71,10 @@ const ProductScreen = ({ match }) => {
 
   const handleQtyChange = (e) => {
     setQty(e.target.value);
+  };
+
+  const addToCartHandler = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
 
   return (
@@ -154,27 +157,31 @@ const ProductScreen = ({ match }) => {
                   {instock}
                 </Typography>
               </Card>
-              <Card className={classes.pricenstock} square>
-                <Typography variant="body1" color="initial">
-                  Qty:
-                </Typography>
-                <FormControl className={classes.formControl}>
-                  <Select
-                    id="demo-simple-select"
-                    value={qty}
-                    onChange={handleQtyChange}
-                  >
-                    {[...Array(Number(product.countinstock)).keys()].map(
-                      (x) => (
+              {Number(product.countinstock) > 0 ? (
+                <Card className={classes.pricenstock} square>
+                  <Typography variant="body1" color="initial">
+                    Qty:
+                  </Typography>
+                  <FormControl className={classes.formControl}>
+                    <Select
+                      id="demo-simple-select"
+                      value={qty}
+                      onChange={handleQtyChange}
+                    >
+                      {[...Array(product.countinstock).keys()].map((x) => (
                         <MenuItem value={x + 1}>{x + 1}</MenuItem>
-                      )
-                    )}
-                  </Select>
-                </FormControl>
-              </Card>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Card>
+              ) : null}
               <Card className={classes.pricenstock} square>
                 {Number(product.countinstock) > 0 ? (
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={addToCartHandler}
+                  >
                     <Typography
                       variant="body2"
                       color="initial"
