@@ -28,10 +28,18 @@ export const cartSlice = createSlice({
         };
       }
     },
+    cart_delete_item: (state, action) => {
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(
+          (x) => x.product !== action.payload.product
+        ),
+      };
+    },
   },
 });
 
-export const { cart_add_item } = cartSlice.actions;
+export const { cart_add_item, cart_delete_item } = cartSlice.actions;
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`);
@@ -45,6 +53,11 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
       qty,
     })
   );
+  localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
+};
+
+export const deletefromCart = (cartItem) => (dispatch, getState) => {
+  dispatch(cart_delete_item(cartItem));
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };
 

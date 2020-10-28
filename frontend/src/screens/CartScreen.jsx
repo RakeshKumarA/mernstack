@@ -2,17 +2,20 @@ import {
   Card,
   CardContent,
   CardMedia,
-  FormControl,
   Grid,
+  IconButton,
   MenuItem,
   Select,
   Typography,
+  Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../reducers/cartSlice';
+import { addToCart, deletefromCart } from '../reducers/cartSlice';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Spacer from 'react-add-space';
 
 const useStyles = makeStyles({
   card: {
@@ -20,18 +23,32 @@ const useStyles = makeStyles({
     padding: '10px',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
     width: '100%',
   },
   cardMedia: {
     width: '10vh',
   },
-  root: {},
   title: {
     margin: '10px 0',
   },
   cardContent: {
-    width: '20%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '25%',
+  },
+  subtotalSection: {
+    marginTop: '20px',
+  },
+  checkoutButton: {
+    width: '80%',
+  },
+  checkoutCard: {
+    width: '60%',
+    padding: '5px 0',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -48,11 +65,15 @@ const CartScreen = ({ match, location }) => {
     }
   }, [dispatch, productId, qty]);
 
+  const removeItemFromCart = (cartItem) => {
+    dispatch(deletefromCart(cartItem));
+  };
+
   return (
     <Grid container>
-      <Grid item sm={8} container>
-        <Grid item sm={1} />
-        <Grid item sm={10} container direction="column">
+      <Grid item xs={8} container>
+        <Grid item xs={1} />
+        <Grid item xs={8} container direction="column">
           <Grid item>
             <Typography variant="h4" color="initial" className={classes.title}>
               Shopping Cart
@@ -62,7 +83,7 @@ const CartScreen = ({ match, location }) => {
             <Alert severity="info">Cart is Empty</Alert>
           ) : (
             cartItems.map((cartItem) => (
-              <Grid item key={cartItem.id} className={classes.root}>
+              <Grid item key={cartItem.product}>
                 <Card className={classes.card}>
                   <div className={classes.cardContent}>
                     <CardMedia
@@ -74,7 +95,7 @@ const CartScreen = ({ match, location }) => {
                     />
                   </div>
                   <CardContent className={classes.cardContent}>
-                    <Typography component="h6" variant="body1">
+                    <Typography component="h6" variant="body2">
                       {cartItem.name}
                     </Typography>
                   </CardContent>
@@ -82,18 +103,31 @@ const CartScreen = ({ match, location }) => {
                     <Typography component="h6" variant="body1">
                       Qty:
                     </Typography>
-                    <FormControl className={classes.formControl}>
-                      <Select value={cartItem.qty}>
-                        {[...Array(cartItem.countinstock).keys()].map((x) => (
-                          <MenuItem value={x + 1}>{x + 1}</MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
+                    <Spacer amount={2} />
+                    <Select
+                      value={cartItem.qty}
+                      onChange={(e) =>
+                        dispatch(
+                          addToCart(cartItem.product, Number(e.target.value))
+                        )
+                      }
+                    >
+                      {[...Array(cartItem.countinstock).keys()].map((x) => (
+                        <MenuItem value={x + 1} key={cartItem.product}>
+                          {x + 1}
+                        </MenuItem>
+                      ))}
+                    </Select>
                   </CardContent>
                   <CardContent className={classes.cardContent}>
                     <Typography component="h6" variant="body1">
                       Price: $ {cartItem.price}
                     </Typography>
+                  </CardContent>
+                  <CardContent className={classes.cardContent}>
+                    <IconButton onClick={() => removeItemFromCart(cartItem)}>
+                      <DeleteIcon />
+                    </IconButton>
                   </CardContent>
                 </Card>
               </Grid>
@@ -101,7 +135,46 @@ const CartScreen = ({ match, location }) => {
           )}
         </Grid>
       </Grid>
-      <Grid item sm={4}></Grid>
+      {cartItems && cartItems.length > 0 && (
+        <Grid
+          item
+          xs={4}
+          container
+          direction="column"
+          className={classes.subtotalSection}
+        >
+          <Grid item>
+            <Card square className={classes.checkoutCard}>
+              <CardContent>
+                <Typography variant="body1" color="initial">
+                  SUBTOTAL (
+                  {cartItems
+                    .map((item) => item.qty)
+                    .reduce((prev, curr) => prev + curr, 0)}
+                  ) items
+                </Typography>
+                <Typography variant="body1" color="initial">
+                  $
+                  {cartItems
+                    .map((item) => Number(item.price) * item.qty)
+                    .reduce((prev, curr) => prev + curr, 0)}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item>
+            <Card square className={classes.checkoutCard}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.checkoutButton}
+              >
+                CHECKOUT
+              </Button>
+            </Card>
+          </Grid>
+        </Grid>
+      )}
     </Grid>
   );
 };

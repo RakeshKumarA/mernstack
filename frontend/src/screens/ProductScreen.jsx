@@ -169,7 +169,9 @@ const ProductScreen = ({ match }) => {
                       onChange={handleQtyChange}
                     >
                       {[...Array(product.countinstock).keys()].map((x) => (
-                        <MenuItem value={x + 1}>{x + 1}</MenuItem>
+                        <MenuItem value={x + 1} key={x}>
+                          {x + 1}
+                        </MenuItem>
                       ))}
                     </Select>
                   </FormControl>
