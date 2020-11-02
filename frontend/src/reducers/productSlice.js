@@ -35,6 +35,7 @@ export const listProducts = () => async (dispatch) => {
     dispatch(product_list_request());
     const { data } = await axios.get('/api/products');
     dispatch(product_list_sucess(data));
+    window.location('/');
   } catch (error) {
     dispatch(product_list_failure(error.message));
   }
