@@ -12,11 +12,9 @@ const protect = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       const results = await db.query(
-        `SELECT id, name, email, isadmin FROM users WHERE id = ${decoded.id}`
+        `SELECT id, name, password, email, isadmin FROM users WHERE id = ${decoded.id}`
       );
-      req = {
-        user: results.rows[0],
-      };
+      req.user = results.rows[0];
       next();
     } catch (error) {
       res.status(401).json({ message: 'Not Authorized' });

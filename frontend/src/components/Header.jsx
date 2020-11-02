@@ -3,8 +3,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { AppBar, Button, Toolbar, Typography, Grid } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PersonIcon from '@material-ui/icons/Person';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Spacer from 'react-add-space';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { user_logout } from '../reducers/userSlice';
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -22,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
 const Header = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { userInfo } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const onClicktocart = () => {
     history.push('/cart');
@@ -29,6 +34,10 @@ const Header = () => {
 
   const onClicktologin = () => {
     history.push('/login');
+  };
+
+  const logoutHandler = () => {
+    dispatch(user_logout());
   };
 
   return (
@@ -46,10 +55,24 @@ const Header = () => {
               <ShoppingCartIcon /> <Spacer amount={2} />
               CART
             </Button>
-            <Button color="inherit" onClick={onClicktologin}>
-              <PersonIcon /> <Spacer amount={2} />
-              SIGN IN
-            </Button>
+            {userInfo && Object.keys(userInfo).length !== 0 ? (
+              <React.Fragment>
+                <Button color="inherit">
+                  <Link to="/profile" className={classes.linkdeco}>
+                    {userInfo.name}
+                  </Link>
+                </Button>
+                <Button color="inherit" onClick={logoutHandler}>
+                  <ExitToAppIcon /> <Spacer amount={2} />
+                  LOG OUT
+                </Button>
+              </React.Fragment>
+            ) : (
+              <Button color="inherit" onClick={onClicktologin}>
+                <PersonIcon /> <Spacer amount={2} />
+                SIGN IN
+              </Button>
+            )}
           </Grid>
           <Grid item sm={2} />
         </Grid>
