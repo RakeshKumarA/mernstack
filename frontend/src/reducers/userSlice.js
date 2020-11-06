@@ -65,6 +65,7 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config
     );
+    window.location = '/';
     dispatch(user_login_sucess(data));
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {

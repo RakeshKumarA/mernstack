@@ -40,6 +40,7 @@ export const register = (name, email, password) => async (dispatch) => {
       { name, email, password },
       config
     );
+    window.location = '/';
     dispatch(user_register_sucess(data));
     dispatch(user_login_sucess(data));
     localStorage.setItem('userInfo', JSON.stringify(data));

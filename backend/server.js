@@ -12,8 +12,6 @@ app.use(express.json());
 
 // Making Prod Ready
 if (process.env.NODE_ENV === 'production') {
-  //server static content
-  //npm run build
   app.use(express.static(path.join(__dirname, '../frontend/build')));
 }
 
