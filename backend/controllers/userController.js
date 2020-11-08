@@ -33,7 +33,7 @@ const authUser = async (req, res) => {
     }
   } catch (error) {
     console.error(error.message);
-    res.status(401).json({ message: 'Email not found' });
+    res.status(401).json({ message: error.message });
   }
 };
 
@@ -123,7 +123,7 @@ const registerUser = async (req, res) => {
     }
   } catch (error) {
     console.error(err.message);
-    res.status(500).json({ message: 'Server Unavailable' });
+    res.status(500).json({ message: error.message });
   }
 };
 
