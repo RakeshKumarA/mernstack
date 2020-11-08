@@ -37,8 +37,8 @@ const ProfileScreen = () => {
   const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (!userInfo && Object.keys(userInfo).length === 0) {
-      history.pushState('/login');
+    if (!userInfo) {
+      history.push('/login');
     } else {
       if (!user.name) {
         dispatch(getUserDetails('profile'));
