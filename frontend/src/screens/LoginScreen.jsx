@@ -49,13 +49,13 @@ const LoginScreen = () => {
 
   return (
     <Grid container className={classes.root}>
-      <Grid item sm={4} />
+      <Grid item xs={1} sm={4} />
       {loading ? (
         <CircularProgress />
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : (
-        <Grid item sm={4} container direction="column" spacing={1}>
+        <Grid item xs={10} sm={4} container direction="column" spacing={1}>
           <Grid item>
             <Typography variant="h4" color="initial" className={classes.title}>
               SIGN IN
@@ -109,7 +109,7 @@ const LoginScreen = () => {
         </Grid>
       )}
 
-      <Grid item sm={4} />
+      <Grid item xs={1} sm={4} />
     </Grid>
   );
 };
