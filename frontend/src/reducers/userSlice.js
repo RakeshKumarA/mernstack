@@ -65,9 +65,13 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config
     );
+    window.location = '/';
     dispatch(user_login_sucess(data));
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
     dispatch(user_login_failure(error.message));
   }
 };
@@ -88,6 +92,9 @@ export const register = (email, password) => async (dispatch) => {
     dispatch(user_login_sucess(data));
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
     dispatch(user_login_failure(error.message));
   }
 };

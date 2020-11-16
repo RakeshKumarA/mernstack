@@ -92,7 +92,7 @@ const ProductScreen = ({ match }) => {
           <Alert severity="error">{error}</Alert>
         ) : (
           <Grid item container>
-            <Grid item xs={6} className={classes.image}>
+            <Grid item xs={12} sm={6} className={classes.image}>
               <Card>
                 <CardMedia
                   component="img"
@@ -102,7 +102,7 @@ const ProductScreen = ({ match }) => {
                 />
               </Card>
             </Grid>
-            <Grid item xs={3} container direction="column">
+            <Grid item xs={12} sm={3} container direction="column">
               <Grid item className={classes.pname}>
                 <Typography variant="h6" color="initial">
                   {product.name}
@@ -140,7 +140,7 @@ const ProductScreen = ({ match }) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item xs={3} className={classes.addtocart}>
+            <Grid item xs={12} sm={3} className={classes.addtocart}>
               <Card className={classes.pricenstock} square>
                 <Typography variant="body1" color="initial">
                   Price:

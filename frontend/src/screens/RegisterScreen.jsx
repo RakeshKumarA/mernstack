@@ -51,13 +51,13 @@ const RegisterScreen = () => {
 
   return (
     <Grid container className={classes.root}>
-      <Grid item sm={4} />
+      <Grid item xs={2} sm={4} />
       {loading ? (
         <CircularProgress />
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : (
-        <Grid item sm={4} container direction="column" spacing={1}>
+        <Grid item xs={8} sm={4} container direction="column" spacing={1}>
           <Grid item>
             <Typography variant="h4" color="initial" className={classes.title}>
               SIGN UP
@@ -142,7 +142,7 @@ const RegisterScreen = () => {
         </Grid>
       )}
 
-      <Grid item sm={4} />
+      <Grid item xs={2} sm={4} />
     </Grid>
   );
 };

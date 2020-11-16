@@ -9,6 +9,7 @@ import { listProducts } from '../reducers/productSlice';
 const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: '10px',
+    textAlign: 'center',
   },
   cirprogress: {
     display: 'grid',

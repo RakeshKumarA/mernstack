@@ -71,9 +71,9 @@ const CartScreen = ({ match, location }) => {
 
   return (
     <Grid container>
-      <Grid item xs={8} container>
-        <Grid item xs={1} />
-        <Grid item xs={8} container direction="column">
+      <Grid item sm={8} container>
+        <Grid item xs={1} sm={1} />
+        <Grid item xs={6} sm={10} container direction="column">
           <Grid item>
             <Typography variant="h4" color="initial" className={classes.title}>
               Shopping Cart
@@ -134,11 +134,12 @@ const CartScreen = ({ match, location }) => {
             ))
           )}
         </Grid>
+        <Grid item xs={10} sm={1} />
       </Grid>
       {cartItems && cartItems.length > 0 && (
         <Grid
           item
-          xs={4}
+          sm={4}
           container
           direction="column"
           className={classes.subtotalSection}
