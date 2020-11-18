@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "proxy": "https://backend-twlrpkz6xa-ey.a.run.app",
-  "secure": false,
   "version": "0.1.0",
   "private": true,
   "dependencies": {
