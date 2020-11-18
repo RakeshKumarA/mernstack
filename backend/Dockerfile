@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 ENV NODE_ENV=dev
 ENV PORT=5000
 ENV PGUSER=postgres
-ENV PGHOST=35.198.170.75
+ENV PGHOST=/cloudsql/proshop-295815:europe-west3:postgres-proshop
 ENV PGPASSWORD=proshop
 ENV PGDATABASE=ecomm
 ENV PGPORT=5432
